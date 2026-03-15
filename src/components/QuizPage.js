@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Navbar from './Navbar';
 import { generateQuizQuestions } from '../services/quizService';
 import './QuizPage.css';
@@ -67,25 +67,6 @@ const QuizPage = () => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     }
   }, [quizzes]);
-
-  useEffect(() => {
-    if (!playingQuiz) {
-      return undefined;
-    }
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          submitQuiz(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [playingQuiz]);
 
   const persistQuizzes = (newQuizzes) => {
     setQuizzes(newQuizzes);
@@ -177,7 +158,7 @@ const QuizPage = () => {
     setTimeLeft(Math.floor((endAt - now) / 1000));
   };
 
-  const submitQuiz = (isAutoSubmit = false) => {
+  const submitQuiz = useCallback((isAutoSubmit = false) => {
     if (!playingQuiz) {
       return;
     }
@@ -220,7 +201,26 @@ const QuizPage = () => {
     setPlayingQuiz(null);
     setAnswers({});
     setTimeLeft(0);
-  };
+  }, [answers, playingQuiz, quizzes]);
+
+  useEffect(() => {
+    if (!playingQuiz) {
+      return undefined;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          submitQuiz(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [playingQuiz, submitQuiz]);
 
   return (
     <div className="quiz-page">
