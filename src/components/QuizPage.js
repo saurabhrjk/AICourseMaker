@@ -36,10 +36,10 @@ const QuizPage = () => {
     durationMinutes: 5
   });
 
-  const getParticipantName = () => (playerName.trim() || 'Anonymous Player');
+  const participantName = playerName.trim() || 'Anonymous Player';
 
-  const hasAlreadyAttempted = (quiz, participantName = getParticipantName()) => {
-    const normalizedName = participantName.trim().toLowerCase();
+  const hasAlreadyAttempted = (quiz, attemptedBy = participantName) => {
+    const normalizedName = attemptedBy.trim().toLowerCase();
     return (quiz.leaderboard || []).some((entry) => entry.name.trim().toLowerCase() === normalizedName);
   };
 
@@ -143,7 +143,7 @@ const QuizPage = () => {
       return;
     }
 
-    const participant = getParticipantName();
+    const participant = participantName;
 
     if (hasAlreadyAttempted(quiz, participant)) {
       setPlayError('You have already attempted this quiz. You can review the leaderboard instead.');
@@ -170,7 +170,7 @@ const QuizPage = () => {
 
     const attempt = {
       id: `attempt-${Date.now()}`,
-      name: getParticipantName(),
+      name: participantName,
       score,
       total,
       submittedAt: new Date().toISOString(),
@@ -201,7 +201,7 @@ const QuizPage = () => {
     setPlayingQuiz(null);
     setAnswers({});
     setTimeLeft(0);
-  }, [answers, playingQuiz, quizzes]);
+  }, [answers, participantName, playingQuiz, quizzes]);
 
   useEffect(() => {
     if (!playingQuiz) {
