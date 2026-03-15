@@ -13,17 +13,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
 .nav-links a {
   color: white;
   text-decoration: none;
-  margin-left: 1.5rem;
   transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: #ffd700;
 }
+
 .navbar-brand {
   font-family: 'Exo 2', sans-serif;
   font-size: 1.8rem;
@@ -38,24 +47,17 @@
   color: #f0f0f0;
 }
 
-
-
 @media (max-width: 768px) {
   .navbar-container {
     padding: 1rem;
   }
 
   .navbar-brand {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
 
-  .navbar-links {
-    gap: 1rem;
-  }
-
-  .nav-link {
-    padding: 0.4rem 1rem;
-    font-size: 0.9rem;
+  .nav-links {
+    gap: 0.8rem;
+    font-size: 0.95rem;
   }
 }
-
