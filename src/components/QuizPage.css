@@ -49,10 +49,15 @@
   color: #fff;
 }
 
-.primary-btn:hover,
+.primary-btn:hover:not(:disabled),
 .secondary-btn:hover,
 .tab-btn:hover {
   transform: translateY(-2px);
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .secondary-btn {
@@ -69,6 +74,18 @@
   margin-bottom: 1.5rem;
 }
 
+.tab-panel {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  margin-bottom: 1rem;
+}
+
+.create-tab-panel {
+  display: flex;
+  justify-content: center;
+}
+
 .quiz-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -80,13 +97,16 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding: 1.4rem;
 }
 
 .create-form {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  max-width: 600px;
+  gap: 0.75rem;
+  max-width: 650px;
+  width: 100%;
+  padding: 2rem;
 }
 
 .create-form .topic-input {
@@ -95,6 +115,8 @@
 
 .empty-state {
   color: #666;
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.25rem;
 }
 
 .result-banner {
@@ -106,9 +128,13 @@
   margin-bottom: 1rem;
 }
 
+.play-error {
+  margin-bottom: 1.2rem;
+}
+
 .name-field-row {
   max-width: 500px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .name-field-row label {
@@ -152,8 +178,40 @@
   border-radius: 10px;
 }
 
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #2c2c2c;
+  pointer-events: none;
+  font-size: 1.1rem;
+}
+
+.difficulty-select {
+  appearance: none;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5ff 100%);
+  border: 2px solid #c9d7ff;
+  font-weight: 600;
+  color: #1f2a44;
+}
+
+.difficulty-select:focus {
+  border-color: #4a69d9;
+  box-shadow: 0 0 0 4px rgba(74, 105, 217, 0.16);
+}
+
 .player-actions {
   margin-top: 1.5rem;
+}
+
+.leaderboard {
+  padding: 1.75rem;
 }
 
 .leaderboard table {
@@ -175,5 +233,13 @@
 
   .quiz-title {
     font-size: 2.2rem;
+  }
+
+  .tab-panel {
+    padding: 0.8rem;
+  }
+
+  .create-form {
+    padding: 1.2rem;
   }
 }

@@ -22,6 +22,7 @@ const QuizPage = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [isCreatingQuiz, setIsCreatingQuiz] = useState(false);
   const [createError, setCreateError] = useState('');
+  const [playError, setPlayError] = useState('');
   const [playingQuiz, setPlayingQuiz] = useState(null);
   const [playerName, setPlayerName] = useState('');
   const [answers, setAnswers] = useState({});
@@ -34,6 +35,13 @@ const QuizPage = () => {
     questionCount: 5,
     durationMinutes: 5
   });
+
+  const getParticipantName = () => (playerName.trim() || 'Anonymous Player');
+
+  const hasAlreadyAttempted = (quiz, participantName = getParticipantName()) => {
+    const normalizedName = participantName.trim().toLowerCase();
+    return (quiz.leaderboard || []).some((entry) => entry.name.trim().toLowerCase() === normalizedName);
+  };
 
   useEffect(() => {
     const initialQuizzes = getStoredQuizzes();
@@ -133,6 +141,7 @@ const QuizPage = () => {
 
       const updated = [newQuiz, ...quizzes];
       persistQuizzes(updated);
+      setPlayError('');
       setActiveTab('live');
       setSelectedLeaderboardQuizId(newQuiz.id);
       setQuizForm({ topic: '', difficulty: 'Easy', questionCount: 5, durationMinutes: 5 });
@@ -153,7 +162,14 @@ const QuizPage = () => {
       return;
     }
 
-    const participant = playerName.trim() || 'Anonymous Player';
+    const participant = getParticipantName();
+
+    if (hasAlreadyAttempted(quiz, participant)) {
+      setPlayError('You have already attempted this quiz. You can review the leaderboard instead.');
+      return;
+    }
+
+    setPlayError('');
     setPlayerName(participant);
     setPlayingQuiz(quiz);
     setAnswers({});
@@ -173,7 +189,7 @@ const QuizPage = () => {
 
     const attempt = {
       id: `attempt-${Date.now()}`,
-      name: playerName.trim() || 'Anonymous Player',
+      name: getParticipantName(),
       score,
       total,
       submittedAt: new Date().toISOString(),
@@ -253,6 +269,8 @@ const QuizPage = () => {
               </div>
             )}
 
+            {playError && <p className="error-message play-error">{playError}</p>}
+
             <div className="tabs-row">
               <button className={`tab-btn ${activeTab === 'live' ? 'active' : ''}`} onClick={() => setActiveTab('live')}>Live Quiz</button>
               <button className={`tab-btn ${activeTab === 'past' ? 'active' : ''}`} onClick={() => setActiveTab('past')}>Past Quiz</button>
@@ -276,16 +294,26 @@ const QuizPage = () => {
                   <p className="empty-state">No live quiz right now. Create one from “Make a Quiz”.</p>
                 ) : (
                   <div className="quiz-grid">
-                    {liveQuizzes.map((quiz) => (
-                      <div key={quiz.id} className="card">
-                        <h3>{quiz.topic}</h3>
-                        <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
-                        <p><strong>Questions:</strong> {quiz.questionCount}</p>
-                        <p><strong>Ends:</strong> {new Date(quiz.endsAt).toLocaleString()}</p>
-                        <button className="primary-btn" onClick={() => startQuiz(quiz)}>Join Live Quiz</button>
-                        <button className="secondary-btn" onClick={() => setSelectedLeaderboardQuizId(quiz.id)}>View Leaderboard</button>
-                      </div>
-                    ))}
+                    {liveQuizzes.map((quiz) => {
+                      const alreadyAttempted = hasAlreadyAttempted(quiz);
+
+                      return (
+                        <div key={quiz.id} className="card">
+                          <h3>{quiz.topic}</h3>
+                          <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
+                          <p><strong>Questions:</strong> {quiz.questionCount}</p>
+                          <p><strong>Ends:</strong> {new Date(quiz.endsAt).toLocaleString()}</p>
+                          <button
+                            className="primary-btn"
+                            onClick={() => startQuiz(quiz)}
+                            disabled={alreadyAttempted}
+                          >
+                            {alreadyAttempted ? 'Already Attempted' : 'Join Live Quiz'}
+                          </button>
+                          <button className="secondary-btn" onClick={() => setSelectedLeaderboardQuizId(quiz.id)}>View Leaderboard</button>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -312,7 +340,7 @@ const QuizPage = () => {
             )}
 
             {activeTab === 'create' && (
-              <div className="tab-panel">
+              <div className="tab-panel create-tab-panel">
                 <form className="create-form card" onSubmit={handleCreateQuiz}>
                   <h3>Create a Live Quiz</h3>
                   <label>Quiz Topic</label>
@@ -325,15 +353,17 @@ const QuizPage = () => {
                   />
 
                   <label>Difficulty</label>
-                  <select
-                    className="topic-input"
-                    value={quizForm.difficulty}
-                    onChange={(event) => setQuizForm((prev) => ({ ...prev, difficulty: event.target.value }))}
-                  >
-                    <option>Easy</option>
-                    <option>Medium</option>
-                    <option>Hard</option>
-                  </select>
+                  <div className="select-wrap">
+                    <select
+                      className="topic-input difficulty-select"
+                      value={quizForm.difficulty}
+                      onChange={(event) => setQuizForm((prev) => ({ ...prev, difficulty: event.target.value }))}
+                    >
+                      <option>Easy</option>
+                      <option>Medium</option>
+                      <option>Hard</option>
+                    </select>
+                  </div>
 
                   <label>Number of Questions</label>
                   <input
