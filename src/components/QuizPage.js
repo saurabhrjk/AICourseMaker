@@ -4,6 +4,7 @@ import { generateQuizQuestions } from '../services/quizService';
 import './QuizPage.css';
 
 const STORAGE_KEY = 'ai-course-maker-quizzes';
+const PARTICIPANT_KEY = 'ai-course-maker-participant-id';
 
 const getStoredQuizzes = () => {
   try {
@@ -35,38 +36,66 @@ const QuizPage = () => {
     questionCount: 5,
     durationMinutes: 5
   });
+  const [participantId, setParticipantId] = useState('');
 
   const participantName = playerName.trim() || 'Anonymous Player';
 
   const hasAlreadyAttempted = (quiz, attemptedBy = participantName) => {
     const normalizedName = attemptedBy.trim().toLowerCase();
-    return (quiz.leaderboard || []).some((entry) => entry.name.trim().toLowerCase() === normalizedName);
+    return (quiz.leaderboard || []).some((entry) => (
+      entry.participantId === participantId
+      || entry.name.trim().toLowerCase() === normalizedName
+    ));
   };
 
   useEffect(() => {
     const initialQuizzes = getStoredQuizzes();
     setQuizzes(initialQuizzes);
-  }, []);
 
-  useEffect(() => {
-    if (!quizzes.length) {
+    const savedParticipantId = localStorage.getItem(PARTICIPANT_KEY);
+    if (savedParticipantId) {
+      setParticipantId(savedParticipantId);
       return;
     }
 
-    const now = Date.now();
-    const updated = quizzes.map((quiz) => {
-      if (quiz.status === 'live' && new Date(quiz.endsAt).getTime() <= now) {
-        return { ...quiz, status: 'past' };
-      }
-      return quiz;
-    });
+    const generatedParticipantId = `participant-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    localStorage.setItem(PARTICIPANT_KEY, generatedParticipantId);
+    setParticipantId(generatedParticipantId);
+  }, []);
 
-    const changed = JSON.stringify(updated) !== JSON.stringify(quizzes);
-    if (changed) {
-      setQuizzes(updated);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    }
-  }, [quizzes]);
+  useEffect(() => {
+    const updateQuizStatuses = () => {
+      setQuizzes((currentQuizzes) => {
+        if (!currentQuizzes.length) {
+          return currentQuizzes;
+        }
+
+        const now = Date.now();
+        const updated = currentQuizzes.map((quiz) => {
+          if (quiz.status === 'live' && new Date(quiz.endsAt).getTime() <= now) {
+            return { ...quiz, status: 'past' };
+          }
+          return quiz;
+        });
+
+        const changed = JSON.stringify(updated) !== JSON.stringify(currentQuizzes);
+        if (changed) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+          if (playingQuiz && new Date(playingQuiz.endsAt).getTime() <= now) {
+            setPlayingQuiz(null);
+            setTimeLeft(0);
+          }
+          return updated;
+        }
+
+        return currentQuizzes;
+      });
+    };
+
+    updateQuizStatuses();
+    const statusTimer = setInterval(updateQuizStatuses, 1000);
+    return () => clearInterval(statusTimer);
+  }, [playingQuiz]);
 
   const persistQuizzes = (newQuizzes) => {
     setQuizzes(newQuizzes);
@@ -174,7 +203,8 @@ const QuizPage = () => {
       score,
       total,
       submittedAt: new Date().toISOString(),
-      autoSubmitted: isAutoSubmit
+      autoSubmitted: isAutoSubmit,
+      participantId
     };
 
     const updatedQuizzes = quizzes.map((quiz) => {
@@ -201,7 +231,7 @@ const QuizPage = () => {
     setPlayingQuiz(null);
     setAnswers({});
     setTimeLeft(0);
-  }, [answers, participantName, playingQuiz, quizzes]);
+  }, [answers, participantId, participantName, playingQuiz, quizzes]);
 
   useEffect(() => {
     if (!playingQuiz) {
