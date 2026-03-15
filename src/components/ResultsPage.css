@@ -1,0 +1,258 @@
+.results-page {
+  min-height: 100vh;
+}
+
+.results-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeInDown 0.6s ease;
+}
+
+.results-topic {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c2c2c;
+  margin-bottom: 0.5rem;
+}
+
+.results-subtitle {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.results-grid {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  flex-direction: column;
+}
+
+.result-card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease;
+  animation-fill-mode: both;
+}
+
+.result-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.result-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.result-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+.video-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.video-item {
+  padding: 1rem;
+  background: rgba(44, 44, 44, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid #2c2c2c;
+  transition: all 0.3s ease;
+}
+
+.video-item:hover {
+  background: rgba(44, 44, 44, 0.1);
+  transform: translateX(5px);
+}
+
+.video-link {
+  color: #2c2c2c;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.video-link:hover {
+  color: #3a3a3a;
+}
+
+.card-header {
+  padding: 1.5rem;
+  background: #2c2c2c;
+  color: white;
+}
+
+.card-header h2 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.card-content {
+  padding: 2rem;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.content-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+.content-text strong {
+  color: #2c2c2c;
+  font-weight: 600;
+}
+
+.theory-card .card-header {
+  background: #2c2c2c;
+}
+
+.questions-card .card-header {
+  background: #3a3a3a;
+}
+
+.videos-card .card-header {
+  background: #424242;
+}
+
+.results-footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.new-search-btn {
+  padding: 1.2rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: white;
+  color: #2c2c2c;
+  border: 2px solid #2c2c2c;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.new-search-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: #2c2c2c;
+  color: white;
+}
+
+.new-search-btn:active {
+  transform: translateY(-1px);
+}
+
+.loading-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: white;
+}
+
+.spinner-large {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-results p {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar for card content */
+.card-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.card-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.card-content::-webkit-scrollbar-thumb {
+  background: #2c2c2c;
+  border-radius: 10px;
+}
+
+.card-content::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+@media (max-width: 768px) {
+  .results-container {
+    padding: 1rem;
+  }
+
+  .results-topic {
+    font-size: 2rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .content-text {
+    font-size: 0.95rem;
+  }
+}
+
