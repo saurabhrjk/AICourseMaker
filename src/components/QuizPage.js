@@ -256,14 +256,14 @@ const QuizPage = () => {
     <div className="quiz-page">
       <Navbar />
       <div className="quiz-container">
-        <h1 className="quiz-title">Quiz Center</h1>
-        <p className="quiz-subtitle">Create live quizzes, join ongoing quizzes, and review past leaderboard results.</p>
+        <h1 className="quiz-title">&gt; tasks --challenge-board</h1>
+        <p className="quiz-subtitle">Create live quizzes, join running quizzes, and track rankings.</p>
 
         {playingQuiz && (
           <div className="quiz-player card">
             <div className="quiz-player-head">
-              <h2>{playingQuiz.topic} ({playingQuiz.difficulty})</h2>
-              <span className="timer-chip">Time Left: {formatCountdown(timeLeft)}</span>
+              <h2>[ task ] {playingQuiz.topic} ({playingQuiz.difficulty})</h2>
+              <span className="timer-chip">time_left: {formatCountdown(timeLeft)}</span>
             </div>
             {playingQuiz.questions.map((question, index) => (
               <div key={question.id} className="question-block">
@@ -302,15 +302,15 @@ const QuizPage = () => {
             {playError && <p className="error-message play-error">{playError}</p>}
 
             <div className="tabs-row">
-              <button className={`tab-btn ${activeTab === 'live' ? 'active' : ''}`} onClick={() => setActiveTab('live')}>Live Quiz</button>
-              <button className={`tab-btn ${activeTab === 'past' ? 'active' : ''}`} onClick={() => setActiveTab('past')}>Past Quiz</button>
-              <button className={`tab-btn ${activeTab === 'create' ? 'active' : ''}`} onClick={() => setActiveTab('create')}>Make a Quiz</button>
+              <button className={`tab-btn ${activeTab === 'live' ? 'active' : ''}`} onClick={() => setActiveTab('live')}>[ Available ]</button>
+              <button className={`tab-btn ${activeTab === 'past' ? 'active' : ''}`} onClick={() => setActiveTab('past')}>[ Completed ]</button>
+              <button className={`tab-btn ${activeTab === 'create' ? 'active' : ''}`} onClick={() => setActiveTab('create')}>[ Make Task ]</button>
             </div>
 
             {activeTab === 'live' && (
               <div className="tab-panel">
                 <div className="name-field-row">
-                  <label htmlFor="playerName">Player Name</label>
+                  <label htmlFor="playerName">participant_name</label>
                   <input
                     id="playerName"
                     type="text"
@@ -321,26 +321,26 @@ const QuizPage = () => {
                   />
                 </div>
                 {!liveQuizzes.length ? (
-                  <p className="empty-state">No live quiz right now. Create one from “Make a Quiz”.</p>
+                  <p className="empty-state">no active task available.</p>
                 ) : (
                   <div className="quiz-grid">
                     {liveQuizzes.map((quiz) => {
                       const alreadyAttempted = hasAlreadyAttempted(quiz);
 
                       return (
-                        <div key={quiz.id} className="card">
-                          <h3>{quiz.topic}</h3>
-                          <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
-                          <p><strong>Questions:</strong> {quiz.questionCount}</p>
-                          <p><strong>Ends:</strong> {new Date(quiz.endsAt).toLocaleString()}</p>
+                        <div key={quiz.id} className="card quiz-task-card">
+                          <h3>[ ] {quiz.topic}</h3>
+                          <p><strong>difficulty:</strong> {quiz.difficulty}</p>
+                          <p><strong>questions:</strong> {quiz.questionCount}</p>
+                          <p><strong>ends_at:</strong> {new Date(quiz.endsAt).toLocaleString()}</p>
                           <button
                             className="primary-btn"
                             onClick={() => startQuiz(quiz)}
                             disabled={alreadyAttempted}
                           >
-                            {alreadyAttempted ? 'Already Attempted' : 'Join Live Quiz'}
+                            {alreadyAttempted ? 'already attempted' : 'start task'}
                           </button>
-                          <button className="secondary-btn" onClick={() => setSelectedLeaderboardQuizId(quiz.id)}>View Leaderboard</button>
+                          <button className="secondary-btn" onClick={() => setSelectedLeaderboardQuizId(quiz.id)}>view leaderboard</button>
                         </div>
                       );
                     })}
@@ -352,16 +352,16 @@ const QuizPage = () => {
             {activeTab === 'past' && (
               <div className="tab-panel">
                 {!pastQuizzes.length ? (
-                  <p className="empty-state">No past quizzes yet. Completed quizzes appear here.</p>
+                  <p className="empty-state">no completed task yet.</p>
                 ) : (
                   <div className="quiz-grid">
                     {pastQuizzes.map((quiz) => (
-                      <div key={quiz.id} className="card">
-                        <h3>{quiz.topic}</h3>
-                        <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
-                        <p><strong>Questions:</strong> {quiz.questionCount}</p>
-                        <p><strong>Ended:</strong> {new Date(quiz.endsAt).toLocaleString()}</p>
-                        <button className="secondary-btn" onClick={() => setSelectedLeaderboardQuizId(quiz.id)}>View Leaderboard</button>
+                      <div key={quiz.id} className="card quiz-task-card">
+                        <h3>[✓] {quiz.topic}</h3>
+                        <p><strong>difficulty:</strong> {quiz.difficulty}</p>
+                        <p><strong>questions:</strong> {quiz.questionCount}</p>
+                        <p><strong>ended:</strong> {new Date(quiz.endsAt).toLocaleString()}</p>
+                        <button className="secondary-btn" onClick={() => setSelectedLeaderboardQuizId(quiz.id)}>view leaderboard</button>
                       </div>
                     ))}
                   </div>
@@ -372,8 +372,8 @@ const QuizPage = () => {
             {activeTab === 'create' && (
               <div className="tab-panel create-tab-panel">
                 <form className="create-form card" onSubmit={handleCreateQuiz}>
-                  <h3>Create a Live Quiz</h3>
-                  <label>Quiz Topic</label>
+                  <h3>&gt; make --new-task</h3>
+                  <label>Task Topic</label>
                   <input
                     type="text"
                     className="topic-input"
@@ -405,7 +405,7 @@ const QuizPage = () => {
                     onChange={(event) => setQuizForm((prev) => ({ ...prev, questionCount: event.target.value }))}
                   />
 
-                  <label>Quiz Ends In (minutes)</label>
+                  <label>Task Ends In (minutes)</label>
                   <input
                     type="number"
                     min="1"
@@ -417,7 +417,7 @@ const QuizPage = () => {
 
                   {createError && <p className="error-message">{createError}</p>}
                   <button type="submit" className="primary-btn" disabled={isCreatingQuiz}>
-                    {isCreatingQuiz ? 'Creating Quiz...' : 'Create Quiz'}
+                    {isCreatingQuiz ? 'creating task...' : 'create task'}
                   </button>
                 </form>
               </div>
@@ -425,23 +425,23 @@ const QuizPage = () => {
 
             {selectedLeaderboardQuiz && (
               <div className="leaderboard card">
-                <h3>{selectedLeaderboardQuiz.topic} Leaderboard</h3>
+                <h3>&gt; leaderboard --{selectedLeaderboardQuiz.topic}</h3>
                 {!selectedLeaderboardQuiz.leaderboard?.length ? (
-                  <p className="empty-state">No attempts yet.</p>
+                  <p className="empty-state">no attempts yet.</p>
                 ) : (
                   <table>
                     <thead>
                       <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Score</th>
-                        <th>Submitted</th>
+                        <th>rank</th>
+                        <th>name</th>
+                        <th>score</th>
+                        <th>submitted</th>
                       </tr>
                     </thead>
                     <tbody>
                       {selectedLeaderboardQuiz.leaderboard.map((entry, index) => (
                         <tr key={entry.id}>
-                          <td>{index + 1}</td>
+                          <td>#{index + 1}</td>
                           <td>{entry.name}</td>
                           <td>{entry.score}/{entry.total}</td>
                           <td>{new Date(entry.submittedAt).toLocaleString()}</td>
