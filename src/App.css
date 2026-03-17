@@ -1,26 +1,13 @@
 .App {
   min-height: 100vh;
-  position: relative;
 }
 
-/* Global animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Utility classes */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
 }
 
-/* Loading states */
 .loading {
   display: flex;
   justify-content: center;
@@ -28,20 +15,18 @@
   min-height: 50vh;
 }
 
-/* Error states */
 .error {
-  color: #ff6b6b;
+  color: #ffb4ba;
   text-align: center;
   padding: 1rem;
-  background: rgba(255, 107, 107, 0.1);
-  border-radius: 10px;
+  background: rgba(255, 91, 114, 0.12);
+  border: 1px solid rgba(255, 126, 145, 0.4);
+  border-radius: 12px;
   margin: 1rem 0;
 }
 
-/* Responsive utilities */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
 }
-
