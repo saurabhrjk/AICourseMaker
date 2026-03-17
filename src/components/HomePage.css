@@ -10,7 +10,7 @@
 
 .hero-section {
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, var(--surface) 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, var(--surface) 0%, #fff7ef 52%, #f8fafc 100%);
   border-radius: 10px;
   padding: 1.35rem;
 }
@@ -48,10 +48,10 @@
 }
 
 .generate-btn {
-  border: 1px solid #2d4058;
+  border: 1px solid #c9843d;
   border-radius: 7px;
   background: linear-gradient(180deg, #eff3f8 0%, #f8efe8 100%);
-  color: #23364c;
+  color: #914d15;
   padding: 0.72rem 0.95rem;
   cursor: pointer;
   display: inline-flex;
@@ -84,8 +84,8 @@
 .spinner {
   width: 13px;
   height: 13px;
-  border: 2px solid #a3b2c3;
-  border-top-color: #25384f;
+  border: 2px solid #ffd4af;
+  border-top-color: #d7771f;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -96,7 +96,8 @@
   .input-container { grid-template-columns: 1fr; }
 }
 
-.feature-card:nth-child(2) {
+.feature-card:nth-child(2),
+.feature-card:nth-child(3) {
   border-color: #e6bf94;
   background: linear-gradient(180deg, #f6efe8 0%, #eef3f8 100%);
 }

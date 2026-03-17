@@ -18,15 +18,17 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 0.72rem 0;
+  border-top: 1px solid #debf9f;
+  border-bottom: 1px solid #debf9f;
+  background: linear-gradient(90deg, #fff8f1 0%, #f8fbff 85%);
+  border-radius: 8px;
+  padding: 0.72rem 0.55rem;
 }
 
 .tab-btn,
 .primary-btn,
 .secondary-btn {
-  background: #eff3f8;
+  background: #f6eee8;
   border: 1px solid #bcc7d4;
   border-radius: 7px;
   color: #344a63;
@@ -49,8 +51,8 @@
 
 .tab-panel,
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface) 0%, #fff8f2 100%);
+  border: 1px solid #d7c5b0;
   border-radius: 9px;
   margin-top: 0.85rem;
 }

@@ -9,7 +9,7 @@
 .about-terminal {
   border: 1px solid var(--border);
   border-radius: 9px;
-  background: var(--surface);
+  background: linear-gradient(180deg, var(--surface) 0%, #fff8f1 100%);
   padding: 0.86rem;
   margin-bottom: 0.85rem;
 }
@@ -28,7 +28,7 @@
 .about-content {
   border: 1px solid var(--border);
   border-radius: 9px;
-  background: var(--surface);
+  background: linear-gradient(180deg, var(--surface) 0%, #fffaf4 100%);
   padding: 1rem;
 }
 

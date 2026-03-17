@@ -14,6 +14,7 @@
   --accent: #2f7cf6;
   --ok: #2f9e55;
   --accent-warm: #f28c38;
+  --accent-warm-soft: #fff1e4;
 }
 
 
@@ -24,8 +25,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background:
-    radial-gradient(circle at 88% 12%, rgba(242, 140, 56, 0.12), transparent 18%),
-    linear-gradient(180deg, #e3e8ee 0%, var(--page-bg) 20%, var(--page-bg) 100%);
+    radial-gradient(circle at 88% 12%, rgba(242, 140, 56, 0.2), transparent 22%),
+    radial-gradient(circle at 12% 82%, rgba(242, 140, 56, 0.1), transparent 20%),
+    linear-gradient(180deg, #e6e1db 0%, var(--page-bg) 24%, var(--page-bg) 100%);
   color: var(--text);
   min-height: 100vh;
 }
