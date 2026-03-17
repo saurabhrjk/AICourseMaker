@@ -13,7 +13,9 @@
   --muted: #5f738d;
   --accent: #2f7cf6;
   --ok: #2f9e55;
+  --accent-warm: #f28c38;
 }
+
 
 body {
   font-family: 'JetBrains Mono', 'Space Mono', 'Fira Code', monospace;
@@ -21,7 +23,9 @@ body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(180deg, #e3e8ee 0%, var(--page-bg) 20%, var(--page-bg) 100%);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(242, 140, 56, 0.12), transparent 18%),
+    linear-gradient(180deg, #e3e8ee 0%, var(--page-bg) 20%, var(--page-bg) 100%);
   color: var(--text);
   min-height: 100vh;
 }

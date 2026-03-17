@@ -29,7 +29,7 @@
 .card-header {
   border-bottom: 1px solid #d2d9e2;
   padding: 0.7rem 0.88rem;
-  background: #f8fafe;
+  background: linear-gradient(90deg, #f8fafe 0%, #fff4e9 100%);
 }
 
 .card-header h2 { color: #1f2f45; font-size: 1rem; }
@@ -55,10 +55,10 @@
 .results-footer { margin-top: 1rem; }
 
 .new-search-btn {
-  border: 1px solid #243850;
+  border: 1px solid #c77b2e;
   border-radius: 7px;
-  background: #eef3f8;
-  color: #1f3248;
+  background: #fff2e6;
+  color: #9a4f13;
   padding: 0.6rem 0.9rem;
   cursor: pointer;
   font-size: 0.88rem;

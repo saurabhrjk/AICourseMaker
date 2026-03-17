@@ -10,7 +10,7 @@
 
 .hero-section {
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: linear-gradient(180deg, var(--surface) 0%, #f8fafc 100%);
   border-radius: 10px;
   padding: 1.35rem;
 }
@@ -50,7 +50,7 @@
 .generate-btn {
   border: 1px solid #2d4058;
   border-radius: 7px;
-  background: #eff3f8;
+  background: linear-gradient(180deg, #eff3f8 0%, #f8efe8 100%);
   color: #23364c;
   padding: 0.72rem 0.95rem;
   cursor: pointer;
@@ -71,6 +71,8 @@
 
 .feature-card {
   border: 1px solid #c5cfdb;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
   border-radius: 8px;
   background: var(--surface-2);
   padding: 0.85rem;
@@ -92,4 +94,14 @@
 
 @media (max-width: 768px) {
   .input-container { grid-template-columns: 1fr; }
+}
+
+.feature-card:nth-child(2) {
+  border-color: #e6bf94;
+  background: linear-gradient(180deg, #f6efe8 0%, #eef3f8 100%);
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: #e0ae75;
 }

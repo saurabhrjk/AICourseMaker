@@ -46,3 +46,19 @@
   border-color: #b6c2d1;
   background: #f0f4f8;
 }
+
+.navbar-brand::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent-warm);
+  animation: pulseDot 2.6s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}

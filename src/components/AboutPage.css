@@ -21,7 +21,7 @@
 }
 
 .terminal-ok {
-  color: var(--ok);
+  color: #b36221;
   font-weight: 700;
 }
 
@@ -50,4 +50,4 @@
   font-size: 0.9rem;
 }
 
-.portfolio-link:hover { border-bottom-style: solid; }
+.portfolio-link:hover { border-bottom-style: solid; color: #d9771b; }

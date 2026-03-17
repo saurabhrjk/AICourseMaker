@@ -36,15 +36,15 @@
 }
 
 .tab-btn.active {
-  border-color: #1e3148;
+  border-color: #c97d32;
   color: #12253a;
-  background: #f8faff;
+  background: linear-gradient(180deg, #fff8f1 0%, #f8faff 100%);
 }
 
 .primary-btn {
-  border-color: #72b684;
-  color: #227f3f;
-  background: #edf8ef;
+  border-color: #d58c45;
+  color: #9a4d11;
+  background: linear-gradient(180deg, #fff4e9 0%, #f9ede1 100%);
 }
 
 .tab-panel,
@@ -135,4 +135,14 @@
   .tab-btn,
   .primary-btn,
   .secondary-btn { width: 100%; text-align: left; }
+}
+
+.timer-chip {
+  box-shadow: 0 0 0 0 rgba(242, 140, 56, 0.26);
+  animation: chipPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes chipPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 140, 56, 0.2); }
+  50% { box-shadow: 0 0 0 4px rgba(242, 140, 56, 0.08); }
 }
