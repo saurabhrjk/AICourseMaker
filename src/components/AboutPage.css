@@ -1,48 +1,53 @@
 .about-page { min-height: 100vh; }
 
 .about-container {
-  max-width: 1100px;
+  max-width: 1050px;
   margin: 0 auto;
-  padding: 1.6rem;
+  padding: 1.25rem;
 }
 
 .about-terminal {
-  border: 1px solid #b6bec8;
-  background: #e7ebf0;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  padding: 0.86rem;
+  margin-bottom: 0.85rem;
 }
 
 .terminal-line {
-  color: #3f566f;
-  margin-bottom: 0.35rem;
+  color: #48627c;
+  margin-bottom: 0.25rem;
+  font-size: 0.88rem;
 }
 
 .terminal-ok {
-  color: #2d9c4c;
+  color: var(--ok);
   font-weight: 700;
 }
 
 .about-content {
-  border: 1px solid #b8c0cb;
-  background: #e7ebf0;
-  padding: 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  padding: 1rem;
 }
 
 .about-title {
-  color: #172438;
-  margin-bottom: 1.1rem;
+  color: #172a40;
+  margin-bottom: 0.8rem;
+  font-size: 1.35rem;
 }
 
-.about-section { margin-bottom: 1.1rem; }
-.about-section h2 { color: #2b4260; margin-bottom: 0.4rem; }
-.about-section p { color: #445a73; line-height: 1.6; }
+.about-section { margin-bottom: 0.88rem; }
+.about-section h2 { color: #29415f; margin-bottom: 0.26rem; font-size: 1rem; }
+.about-section p { color: #4a607a; line-height: 1.58; font-size: 0.89rem; }
 
 .portfolio-link {
   display: inline-block;
-  color: #2f7af3;
+  color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px dashed #7daef8;
+  font-size: 0.9rem;
 }
 
-.portfolio-link:hover { border-color: #2f7af3; }
+.portfolio-link:hover { border-bottom-style: solid; }
